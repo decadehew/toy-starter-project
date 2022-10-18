@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@vicons/ionicons5": "^0.12.0",
+    "naive-ui": "^2.33.5",
+    "nuxt": "3.0.0-rc.11",
+    "nuxt-windicss": "^2.5.2"
+  },
+  "dependencies": {
+    "@css-render/vue3-ssr": "^0.15.11"
+  }
+}
