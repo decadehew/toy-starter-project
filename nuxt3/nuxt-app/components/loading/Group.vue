@@ -28,7 +28,10 @@ onBeforeUnmount(() => {
 <template>
   <div>
     <template v-if="loading">
-      <LoadingSkeleton />
+      <slot name="loading">
+        <!-- 默認 skeleton -->
+        <LoadingSkeleton />
+      </slot>
     </template>
     <template v-else-if="error">
       <n-result class="mt-10" status="500" title="500 錯誤" :description="error?.data?.data || '抱歉！！！'">

@@ -11,7 +11,8 @@ const props = defineProps({
 <template>
   <n-card class="cursor-pointer mb-5 shadow-md !border-0" footer-style="padding:0;">
     <template #cover>
-      <img class="w-[100%] h-[150px]" :src="item.cover" />
+      <!-- 這裡會導致圖片錯誤 -->
+      <UiImage v-if="item?.cover" :src="item.cover" class="w-[100%] h-[150px]" />
     </template>
     <div class="pt-2">
       <span class="font-bold w-full truncate font-semibold">{{item.title}}</span>

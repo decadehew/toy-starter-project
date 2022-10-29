@@ -3,10 +3,13 @@ import { NDrawer, NDrawerContent, NInputGroup, NButton, NInput } from 'naive-ui'
 
 const keyword = ref('')
 const drawer = ref(false)
+const inputRef = ref(null)
 
-const onOpenHandler = () => {
+const onOpenHandler = async () => {
   drawer.value = true
   keyword.value = ''
+  await nextTick()
+  inputRef.value?.focus()
 }
 const onCloseHandler = () => {
   drawer.value = false
@@ -34,7 +37,7 @@ const onSearchHandler = () => {
 
   setTimeout(() => {
     onCloseHandler()
-  }, 200);
+  }, 100)
 }
 
 const keyEventHandler = (e) => {
@@ -64,6 +67,7 @@ defineExpose({
           placeholder="寫什麼啊！！！"
           :style="{ width: '500px' }"
           size="large"
+          ref="inputRef"
         />
         <n-button type="primary" size="large" ghost :disabled="!keyword" @click="onSearchHandler">搜尋</n-button>
       </n-input-group>
