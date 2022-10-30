@@ -10,3 +10,20 @@ export function useQueryToString(query = {}) {
 
   return q
 }
+
+export function useEnterEvent (event) {
+  const enterEventHandler = (e) => {
+    if (e.code === 'Enter') {
+      e.preventDefault()
+      event()
+    }
+  }
+
+  onBeforeMount(() => {
+    document.addEventListener('keydown', enterEventHandler)
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener('keydown', enterEventHandler)
+  })
+}

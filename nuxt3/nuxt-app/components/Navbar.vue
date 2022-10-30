@@ -1,16 +1,17 @@
 <script setup>
-import { NIcon, NButton, NDropdown, NAvatar } from 'naive-ui'
+import { NIcon, NButton, NDropdown, NAvatar, createDiscreteApi } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
 
+const user = useUser()
 const route = useRoute()
 const userOptions = [
   {
-    label: '用户中心',
+    label: '使用者中心',
     key: 'center'
   },
   {
     label: '帳號登出',
-    key: 'layout'
+    key: 'logout'
   }
 ]
 
@@ -89,6 +90,28 @@ const openSearchBar = () => {
   SearchBarRef.value.onOpenHandler()
 }
 
+const handleSelect = (key, opts) => {
+  switch (key) {
+    case 'logout':
+      const { dialog } = createDiscreteApi(['dialog'])
+      dialog.warning({
+        title: '警告',
+        content: '是否退出登入',
+        positiveText: '確定',
+        negativeText: '取消',
+        onPositiveClick: async () => {
+          await useLogout()
+        }
+      })
+      break;
+    case 'center':
+      navigateTo({ path: '/user/history/1' })
+      break
+    default:
+      break;
+  }
+}
+
 </script>
 <template>
   <div class="navbar">
@@ -109,8 +132,15 @@ const openSearchBar = () => {
           </n-icon>
         </template>
       </n-button>
-      <n-dropdown :options="userOptions">
-        <n-avatar round size="medium" src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"></n-avatar>
+      <nuxt-link to="login" v-if="!user">
+        <n-button secondary strong>登入</n-button>
+      </nuxt-link>
+      <n-dropdown :options="userOptions" @select="handleSelect" v-else>
+        <NAvatar
+          round
+          size="medium"
+          :src="user.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'"
+        />
       </n-dropdown>
     </div>
   </div>
