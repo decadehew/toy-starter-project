@@ -123,7 +123,7 @@ onBeforeUnmount(() => {
         {{item.label}}
       </ui-tab-item>
     </ui-tab>
-    <loading-group :pending="pending" :error="error">
+    <loading-group :pending="pending" :error="error" :is-empty="rows.length === 0">
       <template #loading>
         <!-- 替換默認 skeleton -->
         <LoadingCourseSkeleton />

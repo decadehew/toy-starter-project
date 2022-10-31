@@ -14,7 +14,7 @@ const MENUS = [
   },
   {
     title: '購買紀錄',
-    name: ''
+    name: 'user-buy-page'
   },
   {
     title: '我的考試',

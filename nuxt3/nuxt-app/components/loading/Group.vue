@@ -9,6 +9,10 @@ const props = defineProps({
   error: {
     type: [String, Boolean, Symbol],
     default: false
+  },
+  isEmpty: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -39,6 +43,9 @@ onBeforeUnmount(() => {
           <n-button @click="$router.go(-1)">回到上一頁</n-button>
         </template>
       </n-result>
+    </template>
+    <template v-else-if="isEmpty">
+      <Empty />
     </template>
     <template v-else>
       <slot />
