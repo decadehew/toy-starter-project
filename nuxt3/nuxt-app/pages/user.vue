@@ -30,7 +30,7 @@ const MENUS = [
   },
   {
     title: '我的收藏',
-    name: ''
+    name: 'user-fave-page'
   },
   {
     title: '修改資料',

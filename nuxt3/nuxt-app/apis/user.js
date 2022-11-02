@@ -71,3 +71,19 @@ export const useUserCouponApi = (page) => {
     { lazy: true }
   )
 }
+
+export const useUserFaveListApi = (page) => {
+  return useHttpGet(
+    'userFaveList',
+    `/user_fava?page=${page}`,
+    { lazy: true }
+  )
+}
+
+export const useUserunCollectApi = (body) => {
+  return useHttpPost(
+    'userUnCollect',
+    '/uncollect',
+    { body }
+  )
+}
