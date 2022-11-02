@@ -63,3 +63,11 @@ export const useUserPostListApi = (page) => {
     { lazy: true }
   )
 }
+
+export const useUserCouponApi = (page) => {
+  return useHttpGet(
+    'userCoupon',
+    `/user_coupon?page=${page}`,
+    { lazy: true }
+  )
+}

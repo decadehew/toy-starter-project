@@ -26,7 +26,7 @@ const MENUS = [
   },
   {
     title: '優惠券紀錄',
-    name: ''
+    name: 'user-coupon-page'
   },
   {
     title: '我的收藏',
