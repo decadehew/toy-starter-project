@@ -30,7 +30,7 @@ const handleOpen = () => {
     </ui-card-header>
     <ui-card-body class="flex">
       <n-tag size="small" v-if="route.query.tab !== 'column'">{{courseType[item.type]}}</n-tag>
-      <span class="ml-3">{{item.title}}</span>
+      <span class="ml-3 mr-3">{{item.title}}</span>
       <n-button type="primary" size="tiny" @click="handleOpen">繼續觀看</n-button>
     </ui-card-body>
   </ui-card>

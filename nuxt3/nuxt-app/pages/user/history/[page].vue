@@ -63,7 +63,7 @@ const {
         {{item.label}}
       </ui-tab-item>
     </ui-tab>
-    <loading-group :pending="pending" :error="error">
+    <loading-group :pending="pending" :error="error" :is-empty="rows.length === 0">
       <div class="px-3">
         <UserHistoryList v-for="(item, index) in rows" :key="index" :item="item" />
       </div>

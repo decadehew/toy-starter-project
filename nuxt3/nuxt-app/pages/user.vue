@@ -18,11 +18,11 @@ const MENUS = [
   },
   {
     title: '我的考試',
-    name: ''
+    name: 'user-test-page'
   },
   {
     title: '我的帖子',
-    name: ''
+    name: 'user-post-page'
   },
   {
     title: '優惠券紀錄',

@@ -39,3 +39,27 @@ export const useUserHistoryApi = (query) => {
     }
   )
 }
+
+export const useOrderListApi = (page, limit = 20) => {
+  return useHttpGet(
+    'orderList',
+    `/order/list?page=${page}&limit=${limit}`,
+    { lazy: true }
+  )
+}
+
+export const useUserExamTestApi = (page) => {
+  return useHttpGet(
+    'userExamTest',
+    `/user_test/list?page=${page}`,
+    { lazy: true }
+  )
+}
+
+export const useUserPostListApi = (page) => {
+  return useHttpGet(
+    'userPostList',
+    `/mypost?page=${page}`,
+    { lazy: true }
+  )
+}
