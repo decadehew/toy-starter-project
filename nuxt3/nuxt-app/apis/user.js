@@ -87,3 +87,11 @@ export const useUserunCollectApi = (body) => {
     { body }
   )
 }
+
+export const useUpdateUserInfoApi = (body) => {
+  return useHttpPost(
+    'updateUserInfo',
+    '/update_info',
+    { body }
+  )
+}

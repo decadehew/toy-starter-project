@@ -34,7 +34,7 @@ const MENUS = [
   },
   {
     title: '修改資料',
-    name: ''
+    name: 'user-edit'
   },
   {
     title: '修改密碼',
