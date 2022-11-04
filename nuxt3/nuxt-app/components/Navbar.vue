@@ -1,6 +1,7 @@
 <script setup>
 import { NIcon, NButton, NDropdown, NAvatar, createDiscreteApi } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
+import Darkmode from 'darkmode-js'
 
 const user = useUser()
 const route = useRoute()
@@ -14,7 +15,6 @@ const userOptions = [
     key: 'logout'
   }
 ]
-
 const MENUS = [
   {
     name: '首頁',
@@ -61,6 +61,22 @@ const MENUS = [
     match: [{ name: 'list-type-page', params: { type: 'course' } }]
   },
 ]
+
+const darkmodeOptions = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: false, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(darkmodeOptions)
+darkmode.showWidget()
 
 const handleOnOpen = (path) => {
   navigateTo(path)
@@ -151,5 +167,8 @@ const handleSelect = (key, opts) => {
 .navbar {
   z-index: 999;
   @apply bg-white fixed top-0 left-0 right-0 shadow-sm;
+}
+.darkmode-toggle{
+  z-index: 1001;
 }
 </style>
