@@ -38,11 +38,11 @@ const MENUS = [
   },
   {
     title: '修改密碼',
-    name: ''
+    name: 'user-password'
   },
   {
     title: '其他設定',
-    name: ''
+    name: 'user-other'
   }
 ]
 
