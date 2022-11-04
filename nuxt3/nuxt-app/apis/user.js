@@ -95,3 +95,23 @@ export const useUpdateUserInfoApi = (body) => {
     { body }
   )
 }
+
+export const useUploadConfig = () => {
+  const token = useCookie('token')
+
+  return {
+    action: CONFIG.baseURL + '/upload',
+    headers: {
+      appid: CONFIG.headers.appid,
+      token: token.value
+    }
+  }
+}
+
+export const useUpdateUserPasswordApi = (body) => {
+  return useHttpPost(
+    'updateUserPassword',
+    '/update_password',
+    { body }
+  )
+}

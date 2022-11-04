@@ -71,11 +71,12 @@ const handleSubmit = () => {
         <n-input v-model:value="user.username" :autosize="false" class="w-1/2" />
       </n-form-item>
       <n-form-item label="頭像" path="avatar" class="ml-[0.8rem]">
-        <n-upload
+        <!-- <n-upload
           action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
           :default-file-list="[]"
           list-type="image-card"
-        >上傳</n-upload>
+        >上傳</n-upload> -->
+        <uploader v-model="form.avatar"/>
       </n-form-item>
       <n-form-item label="暱稱" path="nickname">
         <n-input v-model:value="form.nickname" :autosize="false" class="w-1/2" placeholder="請輸入暱稱" />
