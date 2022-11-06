@@ -7,6 +7,7 @@
       <slot />
     </main>
     <AppFooter />
+    <Backtotop />
   </div>
 </template>
 <style>

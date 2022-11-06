@@ -5,3 +5,22 @@ export const useCourseListApi = (page) => {
     { lazy: true }
   )
 }
+
+export const useCourseDetailApi = (query = {}) => {
+  query = useQueryToString(query)
+
+  return useHttpGet(
+    'readCourse',
+    `/course/read${query}`,
+    { lazy: true }
+  )
+}
+
+export const useHotCourseListApi = () => {
+  return useHttpGet(
+    'HotCourseList',
+    `/hot`,
+    { lazy: true }
+  )
+}
+

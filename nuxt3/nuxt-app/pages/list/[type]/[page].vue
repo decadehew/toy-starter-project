@@ -39,7 +39,7 @@ const {
       </template>
       <n-grid :x-gap="20" :cols="4">
         <n-gi v-for="item in rows" :key="item">
-          <CourseList />
+          <CourseList :item="item" />
         </n-gi>
       </n-grid>
       <div class="flex justify-center items-center mt-5 mb-10">

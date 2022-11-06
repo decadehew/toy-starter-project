@@ -7,9 +7,14 @@ const props = defineProps({
     default: {}
   }
 })
+
+const handleOpen = () => {
+  navigateTo(`/detail/course/${props.item.id}`)
+}
+
 </script>
 <template>
-  <n-card class="cursor-pointer mb-5 shadow-md !border-0" footer-style="padding:0;">
+  <n-card class="cursor-pointer mb-5 shadow-md !border-0" footer-style="padding:0;" @click="handleOpen">
     <template #cover>
       <!-- 這裡會導致圖片錯誤 -->
       <UiImage v-if="item?.cover" :src="item.cover" class="w-[100%] h-[150px]" />
