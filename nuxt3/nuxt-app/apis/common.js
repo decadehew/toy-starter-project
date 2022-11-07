@@ -19,3 +19,10 @@ export const useSearchListApi = (query) => {
     }
   )
 }
+
+export const useCouponListApi = () => {
+  return useHttpGet(
+    'couponList',
+    '/coupon/list'
+  )
+}

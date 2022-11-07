@@ -1,10 +1,12 @@
 <script setup>
 import { NGrid, NGridItem, NImage, NButton } from 'naive-ui'
+import { useOrderLearnApi } from '@/apis/user'
 import { useCourseDetailApi } from '@/apis/course'
 
 const route = useRoute()
 const { id, type } = route.params
 const { data, error, pending, refresh } = await useCourseDetailApi({ id })
+const isLoading = ref(false)
 
 const title = computed(() => !pending.value ? data.value?.title : '詳細頁面')
 useHead({ title })
@@ -24,6 +26,26 @@ const subTitle = computed(() => {
   return `${pre}${data.value.sub_count} 人學過`
 })
 
+const handleBuy = () => {
+  useHasAuth(async () => {
+    if (data.value.price == 0) {
+      isLoading.value = true
+      
+      const { error } = await useOrderLearnApi({
+        goods_id: data.value.id,
+        type: type || data.value.type
+      })
+      isLoading.value = false
+
+      if (!error.value) {
+        refresh()
+      }
+
+      return
+    }
+  })
+}
+
 </script>
 <template>
   <loading-group :pending="pending" :error="error">
@@ -37,15 +59,17 @@ const subTitle = computed(() => {
         <div class="flex flex-col items-start">
           <div class="flex items-center">
             <span class="text-xl mr-2">{{data.title}}</span>
+            <FaveBtn :isFave="data.isfava" :goods_id="data.id" :type="type" />
           </div>
           <p class="my-2 text-sm text-gray-400">{{subTitle}}</p>
+          <CouponModal />
           <div if="!data.isbuy">
             <Price :value="data.price" class="text-xl" />
             <Price :value="data.t_price" through class="text-sm ml-1" />
           </div>
         </div>
         <div class="mt-auto" v-if="!data.isbuy">
-          <n-button type="primary" @click="">學習啦</n-button>
+          <n-button type="primary" @click="handleBuy" :loading="isLoading">學習啦</n-button>
         </div>
       </div>
     </section>
@@ -54,8 +78,8 @@ const subTitle = computed(() => {
         <section class="detail-bottom">
           <ui-tab>
             <ui-tab-item active>詳細</ui-tab-item>
-            <div class="content" v-html="(data.type === 'media' && data.isbuy) ? data.content : data.try"></div>
           </ui-tab>
+          <div class="content" v-html="(data.type === 'media' && data.isbuy) ? data.content : data.try"></div>
         </section>
       </n-grid-item>
       <n-grid-item :span="6">
@@ -79,8 +103,5 @@ const subTitle = computed(() => {
 }
 .content {
   @apply p-4
-}
-.content img {
-  max-width: 100% !important;
 }
 </style>

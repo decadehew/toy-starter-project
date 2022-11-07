@@ -48,6 +48,14 @@ export const useOrderListApi = (page, limit = 20) => {
   )
 }
 
+export const useOrderLearnApi = (body) => {
+  return useHttpPost(
+    'userOrderLearn',
+    '/order/learn',
+    { body }
+  )
+}
+
 export const useUserExamTestApi = (page) => {
   return useHttpGet(
     'userExamTest',
@@ -72,11 +80,27 @@ export const useUserCouponApi = (page) => {
   )
 }
 
+export const useUserReceiveCouponApi = (body) => {
+  return useHttpPost(
+    'userReceiveCoupon',
+    '/user_coupon/receive',
+    { body }
+  )
+}
+
 export const useUserFaveListApi = (page) => {
   return useHttpGet(
     'userFaveList',
     `/user_fava?page=${page}`,
     { lazy: true }
+  )
+}
+
+export const useUserCollectApi = (body) => {
+  return useHttpPost(
+    'userCollect',
+    '/collect',
+    { body }
   )
 }
 
