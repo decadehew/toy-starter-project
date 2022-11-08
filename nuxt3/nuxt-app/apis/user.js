@@ -48,14 +48,6 @@ export const useOrderListApi = (page, limit = 20) => {
   )
 }
 
-export const useOrderLearnApi = (body) => {
-  return useHttpPost(
-    'userOrderLearn',
-    '/order/learn',
-    { body }
-  )
-}
-
 export const useUserExamTestApi = (page) => {
   return useHttpGet(
     'userExamTest',

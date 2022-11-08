@@ -1,20 +1,20 @@
-export const useCourseListApi = (page) => {
-  return useHttpGet(
-    'courseList',
-    `/course/list?page${page}`,
-    { lazy: true }
-  )
-}
+// export const useCourseListApi = (page) => {
+//   return useHttpGet(
+//     'courseList',
+//     `/course/list?page${page}`,
+//     { lazy: true }
+//   )
+// }
 
-export const useCourseDetailApi = (query = {}) => {
-  query = useQueryToString(query)
+// export const useCourseDetailApi = (query = {}) => {
+//   query = useQueryToString(query)
 
-  return useHttpGet(
-    'readCourse',
-    `/course/read${query}`,
-    { lazy: true }
-  )
-}
+//   return useHttpGet(
+//     'readCourse',
+//     `/course/read${query}`,
+//     { lazy: true }
+//   )
+// }
 
 export const useHotCourseListApi = () => {
   return useHttpGet(
@@ -24,3 +24,10 @@ export const useHotCourseListApi = () => {
   )
 }
 
+export const useOrderLearnApi = (body) => {
+  return useHttpPost(
+    'userOrderLearn',
+    '/order/learn',
+    { body }
+  )
+}

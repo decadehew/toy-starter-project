@@ -26,3 +26,22 @@ export const useCouponListApi = () => {
     '/coupon/list'
   )
 }
+
+export const useListApi = (type, query = {}) => {
+  query = useQueryToString(query)
+  return useHttpGet(
+    `${type}List`,
+    `/${type}/list${query}`,
+    { lazy: true }
+  )  
+}
+
+export const useProductDetailApi = (type, query = {}) => {
+  query = useQueryToString(query)
+
+  return useHttpGet(
+    'productDetail',
+    `/${type}/read${query}`,
+    { lazy: true }
+  )
+}

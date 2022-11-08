@@ -9,7 +9,15 @@ const props = defineProps({
 })
 
 const handleOpen = () => {
-  navigateTo(`/detail/course/${props.item.id}`)
+  const arr = ['course', 'media', 'video', 'audio']
+  let path = ''
+  if (arr.includes(props.item.type)) {
+    path = `/detail/course/${props.item.id}`
+  } else if (props.item.type === 'column') {
+    path = `/detail/column/${props.item.id}`
+  }
+
+  navigateTo(path)
 }
 
 </script>

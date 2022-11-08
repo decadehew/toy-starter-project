@@ -1,16 +1,17 @@
 <script setup>
 import { NGrid, NGi, NPagination, NBreadcrumb, NBreadcrumbItem } from 'naive-ui'
-import { useCourseListApi } from '@/apis/course'
+import { useListApi } from '@/apis/common'
 
 definePageMeta({
   middleware: ['list']
 })
 
 const route = useRoute()
+const { type } = route.params
 const title = route.meta.title
 
 const queryCallbackFn = async ({ page, limit }) => {
-  const data = await useCourseListApi(page)
+  const data = await useListApi(type, { page })
   return data
 }
 

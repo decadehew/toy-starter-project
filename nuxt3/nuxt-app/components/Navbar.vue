@@ -128,14 +128,16 @@ const handleSelect = (key, opts) => {
   }
 }
 
+const pageHome = () => navigateTo('/')
+
 </script>
 <template>
   <div class="navbar">
     <div class="container flex items-center h-[60px]">
-      <n-button text class="!text-xl !font-bold">前端咖啡</n-button>
+      <n-button text class="!text-xl !font-bold" @click="pageHome">前端咖啡</n-button>
       <ui-menu>
         <ui-menu-item
-          v-for="(item, index) in MENUS"
+          v-for="item in MENUS"
           :key="item.name"
           :active="isMenuItemActive(item)"
           @click="() => handleOnOpen(item.path)"

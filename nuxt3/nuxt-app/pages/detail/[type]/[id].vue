@@ -1,11 +1,11 @@
 <script setup>
 import { NGrid, NGridItem, NImage, NButton } from 'naive-ui'
-import { useOrderLearnApi } from '@/apis/user'
-import { useCourseDetailApi } from '@/apis/course'
+import { useOrderLearnApi } from '@/apis/course'
+import { useProductDetailApi } from '@/apis/common'
 
 const route = useRoute()
 const { id, type } = route.params
-const { data, error, pending, refresh } = await useCourseDetailApi({ id })
+const { data, error, pending, refresh } = await useProductDetailApi(type, { id })
 const isLoading = ref(false)
 
 const title = computed(() => !pending.value ? data.value?.title : '詳細頁面')
@@ -25,6 +25,34 @@ const subTitle = computed(() => {
 
   return `${pre}${data.value.sub_count} 人學過`
 })
+
+const initProductDetailTabs = (tab) => {
+  const tabs = computed(() => {
+    const items = [
+      {
+        label: '詳情',
+        value: 'content'
+      }
+    ]
+
+    if (tab === 'column' || tab === 'book') {
+      items.push({
+        label: '目錄',
+        value: 'menu'
+      })
+    }
+
+    return items
+  })
+
+  const tabState = ref('content')
+  const changeTabHandler = (val) => {
+    tabState.value = val
+  }
+
+  return { tabs, tabState, changeTabHandler }
+}
+const { tabs, tabState, changeTabHandler } = initProductDetailTabs(type)
 
 const handleBuy = () => {
   useHasAuth(async () => {
@@ -76,10 +104,19 @@ const handleBuy = () => {
     <n-grid :x-gap="20">
       <n-grid-item :span="18">
         <section class="detail-bottom">
-          <ui-tab>
-            <ui-tab-item active>詳細</ui-tab-item>
+          <ui-tab class="border-b">
+            <ui-tab-item
+              v-for="item in tabs"
+              :key="item.label"
+              :active="tabState === item.value"
+              @click="() => changeTabHandler(item.value)"
+            >{{item.label}}</ui-tab-item>
           </ui-tab>
-          <div class="content" v-html="(data.type === 'media' && data.isbuy) ? data.content : data.try"></div>
+          <div
+            class="content"
+            v-html="(data.type === 'media' && data.isbuy) ? data.content : data.try"
+            v-if="tabState === 'content'"
+          ></div>
         </section>
       </n-grid-item>
       <n-grid-item :span="6">
