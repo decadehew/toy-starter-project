@@ -1,14 +1,24 @@
 <script setup>
-import { NGrid, NGridItem, NImage, NButton } from 'naive-ui'
+import { NGrid, NGridItem, NImage, NButton, createDiscreteApi } from 'naive-ui'
 import { useOrderLearnApi } from '@/apis/course'
 import { useProductDetailApi } from '@/apis/common'
 
 const route = useRoute()
 const { id, type } = route.params
-const { data, error, pending, refresh } = await useProductDetailApi(type, { id })
 const isLoading = ref(false)
+const useRequestQuery = () => {
+  const { column_id } = route.query
+  const query = { id }
+  if (column_id) {
+    query.column_id = column_id
+  }
 
-const title = computed(() => !pending.value ? data.value?.title : '詳細頁面')
+  return query
+}
+const query = useRequestQuery()
+const { data, error, pending, refresh } = await useProductDetailApi(type, query)
+
+const title = computed(() => !pending.value ? data.value?.title : '詳細頁')
 useHead({ title })
 
 const typeObj = {
@@ -52,6 +62,24 @@ const initProductDetailTabs = (tab) => {
 
   return { tabs, tabState, changeTabHandler }
 }
+
+// 是否購買或進入學習
+const handleForLearner = (item) => {
+  useHasAuth(() => {
+    const { message } = createDiscreteApi(['message'])
+    if (type === 'column' && item.price != 0 && !data.value.isbuy) {
+      return message.error('來購買喔')
+    }
+
+    let path = ''
+    if (type === 'column') {
+      path = `/detail/course/${item.id}?column_id=${data.value.id}`
+    }
+
+    navigateTo(path)
+  })
+}
+
 const { tabs, tabState, changeTabHandler } = initProductDetailTabs(type)
 
 const handleBuy = () => {
@@ -89,7 +117,7 @@ const handleBuy = () => {
             <span class="text-xl mr-2">{{data.title}}</span>
             <FaveBtn :isFave="data.isfava" :goods_id="data.id" :type="type" />
           </div>
-          <p class="my-2 text-sm text-gray-400">{{subTitle}}</p>
+          <p class="my-2 text-sm text-gray-400 ml-[0.1rem]">{{subTitle}}</p>
           <CouponModal />
           <div if="!data.isbuy">
             <Price :value="data.price" class="text-xl" />
@@ -117,6 +145,16 @@ const handleBuy = () => {
             v-html="(data.type === 'media' && data.isbuy) ? data.content : data.try"
             v-if="tabState === 'content'"
           ></div>
+          <detail-menu v-else>
+            <detail-menu-item
+              v-for="(item, index) in data.column_courses"
+              :key="index"
+              :index="index"
+              :item="item"
+              @click="() => handleForLearner(item)"
+            ></detail-menu-item>
+            <Empty v-if="data.column_courses.length == 0" desc="無資料" />
+          </detail-menu>
         </section>
       </n-grid-item>
       <n-grid-item :span="6">
