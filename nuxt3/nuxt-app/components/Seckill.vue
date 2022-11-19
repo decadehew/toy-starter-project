@@ -61,9 +61,9 @@ const data = useSeckill(props.time)
 
 </script>
 <template>
-  <div class="count-down">
+  <div class="count-down" v-if="data">
     <small>{{data.days}}</small> 天
-    <small>{{data.hourse}}</small> :
+    <small>{{data.hours}}</small> :
     <small>{{data.minutes}}</small> :
     <small>{{data.seconds}}</small>
   </div>

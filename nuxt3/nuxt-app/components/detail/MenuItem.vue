@@ -9,6 +9,10 @@ const props = defineProps({
   index: {
     type: Number,
     default: 0
+  },
+  active: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -20,12 +24,13 @@ const typeObj = {
 
 </script>
 <template>
-  <li class="detail-menu-item">
+  <li class="detail-menu-item" :class="{active: active}">
     <n-tag
       :bordered="false"
       type="info"
       size="small"
       class="mr-3"
+      v-if="item.type"
     >{{typeObj[item.type]}}</n-tag>
     章節{{index+1}}&ensp;{{item.title}}
     <n-tag
@@ -33,7 +38,7 @@ const typeObj = {
       type="info"
       size="small"
       class="ml-auto watch"
-      v-if="item.price == 0"
+      v-if="item.price == 0 || item.isfree == 1"
     >免費觀看</n-tag>
   </li>
 </template>
@@ -43,5 +48,8 @@ const typeObj = {
 }
 .watch{
   @apply cursor-pointer
+}
+.active {
+  @apply bg-gray-200
 }
 </style>

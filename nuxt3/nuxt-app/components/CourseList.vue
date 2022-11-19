@@ -39,7 +39,7 @@ const handleOpen = () => {
         <div class="flex items-center p-3 bg-yellow-400 text-white text-xs rounded-b">
           {{item.group_id ? '拼團中' : '秒殺中'}}
           <div class="ml-auto flex items-center">
-            倒數中 <Seckill :time="item?.end_time" />
+            倒數中 <Seckill :time="item.end_time" />
           </div>
         </div>
       </ClientOnly>

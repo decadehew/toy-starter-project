@@ -63,6 +63,21 @@ const initProductDetailTabs = (tab) => {
   return { tabs, tabState, changeTabHandler }
 }
 
+if (type === 'course') {
+  useHead({
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css'
+      }
+    ],
+    script: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js' },
+      { src: '//unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js' }
+    ]
+  })
+}
+
 // 是否購買或進入學習
 const handleForLearner = (item) => {
   useHasAuth(() => {
@@ -74,6 +89,8 @@ const handleForLearner = (item) => {
     let path = ''
     if (type === 'column') {
       path = `/detail/course/${item.id}?column_id=${data.value.id}`
+    } else if (type === 'book') {
+      path = `/book/${data.value.id}/${item.id}`
     }
 
     navigateTo(path)
@@ -81,6 +98,26 @@ const handleForLearner = (item) => {
 }
 
 const { tabs, tabState, changeTabHandler } = initProductDetailTabs(type)
+
+const menus = computed(() => {
+  return (type === 'book' ? data.value.book_details : data.value.column_courses) || []
+})
+
+const freeID = computed(() => {
+  let fid = 0
+  if (type === 'book' && data.value) {
+    const item = data.value.book_details.find(o => o.isfree == 1)
+    if (item) {
+      fid = item.id
+    }
+  }
+
+  return fid
+})
+
+const isMediaView = computed(() => {
+  return data.value.isbuy && (data.value.type !== 'media' && type === 'course')
+})
 
 const handleBuy = () => {
   useHasAuth(async () => {
@@ -105,9 +142,24 @@ const handleBuy = () => {
 </script>
 <template>
   <loading-group :pending="pending" :error="error">
-    <section class="detail-top">
+    <section class="py-4" v-if="isMediaView">
+      <ClientOnly>
+        <template #fallback>
+          <LoadingSkeleton />
+        </template>
+        <PlayerAudio
+          :title="data.title"
+          :cover="data.cover"
+          :url="data.content"
+          v-if="data.type === 'audio'"
+        />
+        <PlayerVideo :url="data.content" v-else-if="data.type === 'video'" />
+      </ClientOnly>
+    </section>
+    <section class="detail-top" v-else>
       <NImage
         class="image"
+        :class="{'book-image': type === 'book'}"
         object-fit="cover"
         :src="data.cover"
       />
@@ -125,7 +177,27 @@ const handleBuy = () => {
           </div>
         </div>
         <div class="mt-auto" v-if="!data.isbuy">
-          <n-button type="primary" @click="handleBuy" :loading="isLoading">學習啦</n-button>
+          <template v-if="type === 'book'">
+            <template v-if="menus.length">
+              <n-button type="primary" @click="handleBuy" :loading="isLoading">學習啦</n-button>
+              <n-button
+                type="info"
+                strong
+                secondary
+                class="ml-2"
+                @click="() => handleForLearner({ id: freeID })"
+                :loading="isLoading"
+                v-if="freeID"
+              >免費試看</n-button>
+            </template>
+            <n-button type="error" disabled v-else>敬請期待</n-button>
+          </template>
+          <n-button
+            type="primary"
+            @click="handleBuy"
+            :loading="isLoading"
+            v-else
+          >學習啦</n-button>
         </div>
       </div>
     </section>
@@ -147,13 +219,13 @@ const handleBuy = () => {
           ></div>
           <detail-menu v-else>
             <detail-menu-item
-              v-for="(item, index) in data.column_courses"
+              v-for="(item, index) in menus"
               :key="index"
               :index="index"
               :item="item"
               @click="() => handleForLearner(item)"
             ></detail-menu-item>
-            <Empty v-if="data.column_courses.length == 0" desc="無資料" />
+            <Empty v-if="menus.length == 0" desc="無資料" />
           </detail-menu>
         </section>
       </n-grid-item>
@@ -168,7 +240,10 @@ const handleBuy = () => {
   @apply rounded bg-white flex p-5 my-2
 }
 .detail-top .image {
-  @apply rounded h-[210px] mr-5
+  @apply rounded w-[340px] h-[210px] mr-5
+}
+.detail-top .book-image{
+  @apply rounded w-[130px] h-[180px] mr-8 ml-3
 }
 .detail-top .info {
   @apply flex flex-1 flex-col py-2
@@ -178,5 +253,8 @@ const handleBuy = () => {
 }
 .content {
   @apply p-4
+}
+.content img {
+  max-width: 100% !important;
 }
 </style>
