@@ -168,7 +168,7 @@ const handleBuy = () => {
   @apply rounded bg-white flex p-5 my-2
 }
 .detail-top .image {
-  @apply rounded w-[340px] h-[210px] mr-5
+  @apply rounded h-[210px] mr-5
 }
 .detail-top .info {
   @apply flex flex-1 flex-col py-2

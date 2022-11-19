@@ -36,11 +36,13 @@ const {
     </n-breadcrumb>
     <loading-group :pending="pending" :error="error" :is-empty="rows.length === 0">
       <template #loading>
-        <LoadingCourseSkeleton />
+        <LoadingBookSkeleton v-if="type === 'book'" />
+        <LoadingCourseSkeleton v-else />
       </template>
-      <n-grid :x-gap="20" :cols="4">
+      <n-grid :x-gap="20" :cols="type === 'book'? 2 : 4">
         <n-gi v-for="item in rows" :key="item">
-          <CourseList :item="item" />
+          <BookList :item="item" v-if="type === 'book'" />
+          <CourseList :item="item" v-else />
         </n-gi>
       </n-grid>
       <div class="flex justify-center items-center mt-5 mb-10">
