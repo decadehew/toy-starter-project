@@ -1,0 +1,37 @@
+{
+  "name": "vue3-easy-datatable",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "eslint --fix 'src/**/*.{vue,html,css,js,ts}'"
+  },
+  "main": "./dist/vue3-easy-datatable.umd.js",
+  "module": "./dist/vue3-easy-datatable.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3-easy-datatable.es.js",
+      "require": "./dist/vue3-easy-datatable.umd.js"
+    }
+  },
+  "dependencies": {
+    "vue": "^3.2.41"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "@vitejs/plugin-vue": "^3.2.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "sass": "^1.51.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3",
+    "vite-svg-loader": "^3.3.0",
+    "vue-eslint-parser": "^9.0.1",
+    "vue-tsc": "^0.34.7"
+  }
+}
