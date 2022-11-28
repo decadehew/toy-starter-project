@@ -90,6 +90,9 @@ const serverLoadMore = async (loadQuery: { pageNumber: number, rows: number}) =>
     :items="items"
     :server-items-length="100"
     :loading="isServerLoading"
+    :body-font-size="15"
+    :header-font-size="15"
+    :buttons-pagination="true"
     @click-item="showItem"
   >
   </DataTable>

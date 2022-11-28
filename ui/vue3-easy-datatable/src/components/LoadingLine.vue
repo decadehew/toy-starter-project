@@ -1,4 +1,8 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { inject } from 'vue';
+
+const themeColor = inject('themeColor');
+</script>
 <template>
   <div class="loader-line"></div>
 </template>
@@ -20,7 +24,7 @@
   left: -50%;
   height: 3px;
   width: 40%;
-  background-color: coral;
+  background-color: v-bind(themeColor);
   -webkit-animation: lineAnim 1s linear infinite;
   -moz-animation: lineAnim 1s linear infinite;
   animation: lineAnim 1s linear infinite;

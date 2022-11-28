@@ -45,7 +45,7 @@ const showItem = (item: Item): void => {
 const itemsSelected = ref([]);
 const createMockItems = (): Item[] => {
   const mockItems = [];
-  for (let i = 1; i < 101; i += 1) {
+  for (let i = 1; i < 2000; i += 1) {
     mockItems.push({
       name: `name-${i}`,
       address: `address-${i}`,
@@ -90,6 +90,8 @@ console.log(items);
     :items="items"
     :rows-per-page="10"
     :rows-items="[10, 15, 20, 50]"
+    :body-font-size="15"
+    :buttons-pagination="true"
     @click-item="showItem"
   >
     <!-- https://cn.vuejs.org/guide/components/slots.html#scoped-slots -->

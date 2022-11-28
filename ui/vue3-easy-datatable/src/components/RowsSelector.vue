@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {
-  ref, computed, PropType, onMounted, onBeforeUnmount,
+  ref, computed, PropType, onMounted, onBeforeUnmount, inject,
 } from 'vue';
 
 const props = defineProps({
@@ -14,6 +14,7 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(['update:modelValue']);
+const themeColor = inject('themeColor');
 const showList = ref(false);
 const rowsComputed = computed({
   get: (): number => props.modelValue,
@@ -128,8 +129,8 @@ onBeforeUnmount(() => {
       padding: 5px;
       background-color: #fff;
       &.selected {
-        color: #1867c0;
-        background-color: #dbe7f5;
+        color: #fff;
+        background-color: v-bind(themeColor);
       }
     }
   }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType, computed } from 'vue';
+import { PropType, computed, inject } from 'vue';
 
 const props = defineProps({
   status: {
@@ -8,6 +8,7 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(['change']);
+const themeColor = inject('themeColor');
 
 const isChecked = computed(() => props.status === 'allSelected');
 const toggleChecked = () => {
@@ -28,18 +29,10 @@ const toggleChecked = () => {
   </div>
 </template>
 <style lang="scss" scoped>
-$checkbox-checked-color: rgb(51, 122, 183);
-$checkbox-border-color: rgba(0, 0, 0, 0.54);
-$checkbox-size: 1.25em;
-$checkbox-margin: 1em 0;
-$checkbox-padding: .25em;
-$checkbox-border-width: 1px;
-$checkbox-border-radius: 0.125em;
-$checkbox-label-padding: .75em;
-$checkmark-width: 0.125em;
-$checkmark-color: #fff;
-$line-width: 0.125em;
-$line-color: #fff;
+@import '../scss/checkbox.scss';
+
+$checkbox-checked-color: v-bind(themeColor);
+
 .multi-select__checkbox {
   position: relative;
   width: $checkbox-size;
@@ -50,7 +43,7 @@ $line-color: #fff;
     line-height: $checkbox-size;
     vertical-align: top;
     clear: both;
-    padding-left: 1px;
+    // padding-left: 1px;
     &:before, &:after {
       content: "";
       position: absolute;
