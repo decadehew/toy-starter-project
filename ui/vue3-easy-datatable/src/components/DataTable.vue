@@ -318,6 +318,7 @@ const lastIndexOfItemsInCurrentPage = computed((): number => Math.min(
 const firstIndexOfItemsInCurrentPage = computed((): number => (currentPaginationNumber.value - 1)
   * rowsPerPageReactive.value + 1);
 // page up, page down
+// 分頁計算：總共數據 / 一頁顯示數據 10 筆 = 分頁數量
 const maxPaginationNumber = computed((): number => Math.ceil(itemsSearching.value.length / rowsPerPageReactive.value));
 const isLastPage = computed((): boolean => currentPaginationNumber.value === maxPaginationNumber.value);
 const isFirstPage = computed((): boolean => currentPaginationNumber.value === 1);

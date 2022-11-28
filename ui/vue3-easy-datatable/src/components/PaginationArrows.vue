@@ -21,6 +21,7 @@ const slots = useSlots();
   >
     <span class="arrow arrow-right"></span>
   </div>
+  <!-- 插槽內容：buttonsPagination -->
   <slot
     v-if="slots.buttonsPagination"
     name="buttonsPagination"
